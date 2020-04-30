@@ -13,6 +13,7 @@ const GlobalStyle = createGlobalStyle`
     font-family: '${data.themeing.fontname}', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    color: ${data.colors.mainText};
   }
 
   * {

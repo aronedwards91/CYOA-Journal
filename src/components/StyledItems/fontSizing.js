@@ -1,10 +1,10 @@
 import styled from "styled-components";
-import Settings from "../../cyoadata";
+import Settings from "../../constants";
 
-const FontScale = Settings.styling.themeing.fontScaling;
+const FontScale = Settings.themeing.fontScaling;
 
 export const HeaderLg = styled.span`
-  font-size: calc(${FontScale} * 2rem + 2vw);
+  font-size: calc(${FontScale} * 1.5rem + 6vw);
 `;
 
 export const HeaderMd = styled.span`

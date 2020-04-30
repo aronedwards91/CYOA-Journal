@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import BackgroundImg from "../../images/background.jpg";
+import BackgroundImg from "../../images/bg.jpg";
 
 export const BgImg = () => <Image src={BackgroundImg} />;
 

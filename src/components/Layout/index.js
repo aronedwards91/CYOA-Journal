@@ -3,20 +3,24 @@ import React, { useState } from "react";
 import styled from "styled-components";
 
 import { BgImg } from "../Background";
+import Header from "../header";
+import Warehouse from "../warehouse";
 
-const Template = styled.div`
+const LayoutWrapper = styled.div`
   display: flex;
+  flex-direction: column;
 `;
 
 const Layout = () => {
-  const [expandedChar, setExpandedChar] = useState(false);
-  const switchCharSize = () => setExpandedChar(!expandedChar);
+  // const [expandWarehouse, setExpandWarehouse] = useState(false);
+  // const switchCharSize = () => setExpandedChar(!expandedChar);
 
   return (
-    <Template>
-      Helo
+    <LayoutWrapper>
+      <Header />
+      <Warehouse />
       <BgImg />
-    </Template>
+    </LayoutWrapper>
   );
 };
 
