@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { TextMdCss, TextMd, HeaderMd } from "../StyledItems/fontSizing";
+import { TextMdCss, HeaderMd } from "../StyledItems/fontSizing";
 
 const Strings = {
   title: "Warehouse",

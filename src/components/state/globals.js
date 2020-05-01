@@ -3,15 +3,44 @@ import { useLocalStore } from "mobx-react-lite";
 
 export function createGlobalStore() {
   return {
-    isShowingChoiceEffects: true,
-    showChoiceEffects() {
-      this.isShowingChoiceEffects = true;
+    isShowingCustomFonts: true,
+    showCustomFonts() {
+      this.isShowingCustomFonts = true;
     },
-    hideChoiceEffects() {
-      this.isShowingChoiceEffects  = false;
+    hideCustomFonts() {
+      this.isShowingCustomFonts = false;
+    },
+    jumpsArray: [{ test: "val" }],
+    addJump(newJumpObj) {
+      console.log("jumpIn:", newJumpObj);
+      if (CheckJumpImport(newJumpObj)) {
+        console.log("file ok");
+        this.jumpsArray.push(newJumpObj);
+      }
+    },
+    removeJump(jumpId) {
+      // todo
+    },
+    jumpsJournal: [],
+    addJumpJournal(jumpId) {
+      this.jumpsJournal.push({
+        jumpId,
+        entries: [],
+      });
     },
   };
 }
+
+const CheckJumpImport = (file) => {
+  console.log("check", file);
+  if (file.name && file["body-race"]) {
+    return true;
+  } else {
+    window.alert(
+      "Imported .json file is incorrect, should be imported from CYOA - Viewer built jump"
+    );
+  }
+};
 
 const GlobalStoreContext = React.createContext();
 

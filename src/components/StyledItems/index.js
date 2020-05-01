@@ -3,26 +3,24 @@ import styled from "styled-components";
 import media from "styled-media-query";
 
 
-import { TextSmCss } from "./fontSizing";
-import Data from "../../cyoadata";
-
-const Style = Data.styling;
-const MainBorderStyle = `${Style.themeing.bordersWidth} ${Style.themeing.borderStyle}
-${Style.colors.mainBorder}`
+import { TextSmCss, TextMdCss } from "./fontSizing";
 
 export const RedX = () => <span style={{ color: "red" }}>X</span>;
 
-export const Card = styled.div`
-  border-radius: ${Style.themeing.sectionCornerRadius};
-  border: ${MainBorderStyle};
-  margin: calc(2rem + 2vw) calc(0.5rem + 1.5vw);
-  padding: 16px;
-  background: linear-gradient(
-    0.15turn,
-    ${Style.colors.bgB},
-    ${Style.colors.bgA},
-    ${Style.colors.bgB}
-  );
+export const Btn = styled.div`
+  cursor: pointer;
+  background: rgba(54, 54, 52, 0.6);
+  border: 2px solid black;
+  border-radius: 5px;
+  padding: calc(4px + 0.5vw);
+  ${TextMdCss};
+  margin-bottom: 8px;
+  width: 60%;
+
+  ${media.greaterThan("medium")`
+    margin-bottom: 16px;
+    width: auto;
+  `}
 `;
 
 export const Article3Col = styled.article`
@@ -32,7 +30,7 @@ export const Article3Col = styled.article`
   margin: 0 auto;
   max-width: 1000px;
   column-gap: 64px;
-  column-rule: 1px solid ${Style.colors.mainBorder};
+  column-rule: 1px solid grey;
 `;
 
 export const Article2ColDesktop = styled.article`
@@ -42,7 +40,7 @@ export const Article2ColDesktop = styled.article`
     columns: 2 220px;
     margin: 0 auto;
     column-gap: 48px;
-    column-rule: 1px dotted ${Style.colors.mainBorder};
+    column-rule: 1px dotted grey;
   `}
 `;
 
@@ -54,10 +52,10 @@ export const Tooltip = styled.div`
   left: 0;
   padding: 8px;
   min-width: 140px;
-  background: ${Style.colors.bgA};
+  background: darkgrey;
   z-index: 100;
-  border: 1px solid ${Style.colors.mainBorder};
-  border-radius: ${Style.themeing.bordersWidth};
+  border: 1px solid grey;
+  border-radius: 4px;
 `;
 export const TooltipWrapper = styled.div`
   position: relative;

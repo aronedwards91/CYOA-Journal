@@ -11,7 +11,7 @@ ReactDOM.render(
   <React.StrictMode>
     <GlobalStyle />
     <GlobalStoreProvider>
-        <Layout />
+      <Layout />
     </GlobalStoreProvider>
   </React.StrictMode>,
   document.getElementById("root")

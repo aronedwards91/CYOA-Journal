@@ -2,22 +2,20 @@ import React from "react";
 import styled from "styled-components";
 
 import media from "styled-media-query";
-import { HeaderLg, TextMdCss } from "../StyledItems/fontSizing";
+import { HeaderLg } from "../StyledItems/fontSizing";
+import Settings from "../settings";
+import ImportJump from "../importjump";
 
 const Strings = {
   title: "JUMPCHAIN CYOA",
-  import: "Import jump",
-  export: "Export jump",
-  settings: "Settings",
 };
 
 const Header = () => (
   <Wrapper>
     <HeaderText>{Strings.title}</HeaderText>
     <BtnWrapper>
-      <Btn>{Strings.import}</Btn>
-      <Btn>{Strings.export}</Btn>
-      <Btn>{Strings.settings}</Btn>
+      <ImportJump />
+      <Settings />
     </BtnWrapper>
   </Wrapper>
 );
@@ -44,21 +42,6 @@ const HeaderText = styled(HeaderLg)`
 const BtnWrapper = styled.div`
   display: flex;
   flex-direction: column;
-`;
-const Btn = styled.div`
-  cursor: pointer;
-  background: rgba(54, 54, 52, 0.6);
-  border: 2px solid black;
-  border-radius: 5px;
-  padding: calc(4px + 0.5vw);
-  ${TextMdCss};
-  margin-bottom: 8px;
-  width: 60%;
-
-  ${media.greaterThan("medium")`
-    margin-bottom: 16px;
-    width: auto;
-  `}
 `;
 
 export default Header;

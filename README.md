@@ -12,7 +12,9 @@ Journalpage for storing adventures
 
 
 #### TODO
-design, import export, local storage
+- local storage
+- styled jump
+- custom font
 
 ## Setup & other stuff
 
