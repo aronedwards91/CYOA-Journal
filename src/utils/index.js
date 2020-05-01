@@ -14,3 +14,19 @@ export const runJSONFromUpload = (importElementID, onFileLoad) => {
 
   fr.readAsText(files.item(0));
 };
+
+// LocalStorage
+const localStorageKey = "cyoajournal";
+
+export const getStorage = () => {
+  const storageItem = localStorage.getItem(localStorageKey);
+  try {
+    return JSON.parse(storageItem);
+  } catch (e) {
+    return false;
+  }
+};
+
+export const storeData = (dataObj) => {
+  localStorage.setItem(localStorageKey, JSON.stringify(dataObj));
+};

@@ -1,25 +1,33 @@
 import React from "react";
 import { useLocalStore } from "mobx-react-lite";
+import { storeData, getStorage } from "../../utils";
+
+const init = getStorage();
 
 export function createGlobalStore() {
   return {
-    isShowingCustomFonts: true,
+    isShowingCustomFonts: init.hasOwnProperty("isShowingCustomFonts")
+      ? init.isShowingCustomFonts
+      : true,
     showCustomFonts() {
       this.isShowingCustomFonts = true;
+      updateLocalStorage(this);
     },
     hideCustomFonts() {
       this.isShowingCustomFonts = false;
+      updateLocalStorage(this);
     },
-    jumpsArray: [{ test: "val" }],
+    jumpsArray: init.jumpsArray || [{ test: "val" }],
     addJump(newJumpObj) {
-      console.log("jumpIn:", newJumpObj);
       if (CheckJumpImport(newJumpObj)) {
         console.log("file ok");
         this.jumpsArray.push(newJumpObj);
       }
+      updateLocalStorage(this);
     },
     removeJump(jumpId) {
       // todo
+      updateLocalStorage(this);
     },
     jumpsJournal: [],
     addJumpJournal(jumpId) {
@@ -27,12 +35,20 @@ export function createGlobalStore() {
         jumpId,
         entries: [],
       });
+      updateLocalStorage(this);
     },
   };
 }
 
+const updateLocalStorage = (context) => {
+  const Obj = {
+    isShowingCustomFonts: context.isShowingCustomFonts,
+    jumpsArray: context.jumpsArray,
+  };
+  storeData(Obj);
+};
+
 const CheckJumpImport = (file) => {
-  console.log("check", file);
   if (file.name && file["body-race"]) {
     return true;
   } else {
