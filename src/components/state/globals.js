@@ -17,7 +17,8 @@ export function createGlobalStore() {
       this.isShowingCustomFonts = false;
       updateLocalStorage(this);
     },
-    jumpsArray: init.jumpsArray || [{ test: "val" }],
+    showItemname: true,
+    jumpsArray: init.jumpsArray || [],
     addJump(newJumpObj) {
       if (CheckJumpImport(newJumpObj)) {
         console.log("file ok");
@@ -37,6 +38,27 @@ export function createGlobalStore() {
       });
       updateLocalStorage(this);
     },
+    warehouse: [
+      {
+        name: "40,000sq",
+        desc: "A ton of space.",
+        quantity: 1,
+        icon: false,
+      },
+      {
+        name: "Cosmis Warehouse Key/tattoo",
+        desc:
+          "Rubbing the mark opens a portal, closing portal stops time in warehouse .",
+        quantity: 1,
+        icon: false,
+      },
+      {
+        name: "Statis Pods",
+        desc: "Can hold a humanoid, freezes them and stops aging.",
+        quantity: 10,
+        icon: false,
+      },
+    ],
   };
 }
 

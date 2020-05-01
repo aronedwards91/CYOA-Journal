@@ -3,16 +3,16 @@ import { observer } from "mobx-react-lite";
 import styled from "styled-components";
 
 import { useGlobalDataStore } from "../state/globals";
+import Jump from "./jump";
 
 const Jumps = observer(() => {
   const { jumpsArray } = useGlobalDataStore();
 
   return (
     <Wrapper>
-      {jumpsArray.map((element) => {
-          return (
-          <p>{JSON.stringify(element)}</p>
-      )})}
+      {jumpsArray.map((element) => (
+        <Jump key={element.name} jumpData={element} />
+      ))}
     </Wrapper>
   );
 });
