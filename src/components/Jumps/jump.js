@@ -22,8 +22,9 @@ import {
   Wrapper,
   FontWrapper,
 } from "./styled";
+import RemoveJump from "./removeJump";
 
-const Jump = ({ jumpData, keyStr, showFont }) => (
+const Jump = ({ jumpData, keyStr, showFont, index }) => (
   <Wrapper
     styling={jumpData.styling.themeing}
     col={jumpData.styling.colors}
@@ -37,6 +38,7 @@ const Jump = ({ jumpData, keyStr, showFont }) => (
     <FontWrapper font={jumpData.styling.font} showFont={showFont}>
       <Header jumpData={jumpData} />
       <Extra jumpData={jumpData} col={jumpData.styling.colors} />
+      <RemoveJump jumpIndex={index} />
     </FontWrapper>
   </Wrapper>
 );

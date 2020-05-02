@@ -67,7 +67,7 @@ export const Wrapper = styled.div`
     ${col.bgA},
     ${col.bgB}
   );`}
-
+  margin-bottom: calc(2rem + 3vw);
 `;
 export const FontWrapper = styled.div`
   ${({ font, showFont }) => showFont && `font-family: ${font.fontName};`}
@@ -91,4 +91,9 @@ export const InventoryWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
   margin-top: 8px;
+`;
+
+// Remove
+export const RemoveWrapper = styled.div`
+  margin-top: 16px;
 `;

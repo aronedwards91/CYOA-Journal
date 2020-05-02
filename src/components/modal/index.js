@@ -21,7 +21,7 @@ const Modal = ({ children, title, onHide }) => {
 };
 
 const BgWrapper = styled.div`
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   height: 100%;

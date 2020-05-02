@@ -2,7 +2,7 @@ import React from "react";
 import { useLocalStore } from "mobx-react-lite";
 import { storeData, getStorage } from "../../utils";
 
-const init = getStorage();
+const init = getStorage() || {};
 
 export function createGlobalStore() {
   return {
@@ -30,14 +30,14 @@ export function createGlobalStore() {
     },
     jumpsArray: init.jumpsArray || [],
     addJump(newJumpObj) {
-      if (CheckJumpImport(newJumpObj)) {
+      if (CheckJumpImport(newJumpObj, this.jumpsArray)) {
         console.log("file ok");
         this.jumpsArray.push(newJumpObj);
       }
       updateLocalStorage(this);
     },
-    removeJump(jumpId) {
-      // todo
+    removeJump(jumpArrId) {
+      this.jumpsArray.splice(jumpArrId, 1);
       updateLocalStorage(this);
     },
     jumpsJournal: [],
@@ -90,9 +90,16 @@ const updateLocalStorage = (context) => {
   storeData(Obj);
 };
 
-const CheckJumpImport = (file) => {
+const CheckJumpImport = (file, jumpsArray) => {
   if (file.name && file["body-race"]) {
-    return true;
+    file.ujid = file.name + '--' + file.cyoa;
+    const existsCheck = jumpsArray.findIndex((i) => i.ujid === file.ujid);
+    console.log('exc', existsCheck);
+    if (existsCheck === -1) {
+      return true;
+    } else {
+      window.alert("Jump already exists");
+    }
   } else {
     window.alert(
       "Imported .json file is incorrect, should be imported from CYOA - Viewer built jump"

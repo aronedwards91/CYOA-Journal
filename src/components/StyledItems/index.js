@@ -21,6 +21,16 @@ export const Btn = styled.div`
     width: auto;
   `}
 `;
+export const SmBtn = styled.div`
+  cursor: pointer;
+  border: 1px solid
+    ${({ colors }) => (colors && colors.mainBorder) || "black"};
+  border-radius: 5px;
+  padding: calc(2px + 0.3vw) calc(8px + 1vw);
+  ${TextSmCss};
+  margin-bottom: 4px;
+  width: fit-content;
+`;
 
 export const Article3Col = styled.article`
   -webkit-columns: 3 180px;
@@ -170,7 +180,8 @@ export const InventoryItem = ({
 );
 
 const InventoryItemBox = styled.div`
-  border-left: 1px solid ${({ colors }) => (colors && colors.mainBorder) || "black"};
+  border-left: 1px solid
+    ${({ colors }) => (colors && colors.mainBorder) || "black"};
   padding: 4px 16px;
   cursor: help;
 `;
@@ -199,16 +210,16 @@ const InvBtn = styled.a`
     position: absolute;
     padding-top: 200%;
     padding-left: 250%;
-    margin-left: -20px!important;
+    margin-left: -20px !important;
     margin-top: -150%;
     opacity: 0;
-    transition: all 0.8s
+    transition: all 0.8s;
   }
-  
+
   &:active:after {
     padding: 0;
     margin: 0;
     opacity: 1;
-    transition: 0s
+    transition: 0s;
   }
 `;

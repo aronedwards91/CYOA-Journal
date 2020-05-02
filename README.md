@@ -14,6 +14,7 @@ Journalpage for storing adventures
 - journalling
 - backup / restore character
 - collapsable jump
+- mobile styling
 
 ## Setup & other stuff
 
