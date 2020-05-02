@@ -2,9 +2,11 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import media from "styled-media-query";
 import { observer } from "mobx-react-lite";
+
 import { useGlobalDataStore } from "../state/globals";
 import { InventoryItem, Btn } from "../StyledItems";
 import { HeaderMd, TextSmCss } from "../StyledItems/fontSizing";
+import CustomItem from "../customitem";
 
 const Strings = {
   title: "Warehouse",
@@ -37,6 +39,7 @@ const Warehouse = observer(() => {
           <Removebtn onClick={switchRemove}>
             {showRemove ? Strings.hideRemove : Strings.remove}
           </Removebtn>
+          <CustomItem />
           <WarehouseWrapper>
             {warehouse.map((item, index) => {
               const remove = () => removeFromWarehouse(index);
@@ -82,6 +85,8 @@ const WarehouseWrapper = styled.div`
 const Removebtn = styled(Btn)`
   ${TextSmCss}
   width: fit-content;
+  display: inline-block;
+  margin-right: 16px;
 
   ${media.greaterThan("medium")`
     width: fit-content;

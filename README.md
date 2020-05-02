@@ -11,9 +11,9 @@ Journalpage for storing adventures
 - Image linked will auto embed up to 6MB (over 6 is left out just as a warning as this creates very slow & large html files, most images are small and only require around 300x400 for big screens.)
 
 #### TODO
-- warehouse; add custom item
 - journalling
-- backup character
+- backup / restore character
+- collapsable jump
 
 ## Setup & other stuff
 
