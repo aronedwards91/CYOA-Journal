@@ -1,34 +1,56 @@
-import React from "react";
-import styled from "styled-components";
-import { TextMdCss, HeaderMd, HeaderSm } from "../StyledItems/fontSizing";
+import React, { useState } from "react";
+import { TooltipWrapper, Tooltip, Btn } from "../StyledItems";
+import { HeaderMd } from "../StyledItems/fontSizing";
 import { Helmet } from "react-helmet";
+import { charKeys } from "../../utils";
+import {
+  InventoryWrapper,
+  InventoryItemBox,
+  InvImg,
+  ExtraWrapper,
+  LeftCol,
+  RightCol,
+  TextUnderline,
+  RightColWrap,
+  HeaderWrapper,
+  Image,
+  TextWrapper,
+  HeaderDiv,
+  SettingsTitle,
+  FillMiddle,
+  Wrapper,
+  FontWrapper,
+} from "./styled";
 
-const Jump = ({ jumpData, key }) => {
-  console.log("j", jumpData.styling);
+const Jump = ({ jumpData, keyStr, showFont }) => {
+  console.log("sf-", showFont);
 
   return (
     <Wrapper
       styling={jumpData.styling.themeing}
       col={jumpData.styling.colors}
-      key={key}
+      key={keyStr}
     >
       <Helmet>
-        {jumpData.styling.font.fontIsLink && (
+        {jumpData.styling.font.fontIsLink && showFont && (
           <link href={jumpData.styling.font.fontData} rel="stylesheet" />
         )}
       </Helmet>
-      <FontWrapper font={jumpData.styling.font}>
+      <FontWrapper font={jumpData.styling.font} showFont={showFont}>
         <Header jumpData={jumpData} />
+        <Extra jumpData={jumpData} col={jumpData.styling.colors} />
       </FontWrapper>
     </Wrapper>
   );
 };
 
-const Main = ({ jumpData }) => <div>x</div>;
-
 const Header = ({ jumpData }) => (
   <HeaderWrapper>
-    <Image src={jumpData.profImg} alt="profile" />
+    <Image
+      src={jumpData.profImg}
+      alt="profile"
+      colors={jumpData.styling.colors}
+    />
     <TextWrapper>
       <HeaderMd>{jumpData.cyoa}</HeaderMd>
       <HeaderDiv pad text={`- ${jumpData.subHeader} -`} />
@@ -36,62 +58,103 @@ const Header = ({ jumpData }) => (
         pad
         text={`${jumpData.name} - Age: ${jumpData.age} - ${jumpData["body-race"]} - Origin: ${jumpData["char-background"]}`}
       />
-
-      <div>Setting; v</div>
     </TextWrapper>
-    <Image src={jumpData.logo} alt="logo" />
+    <Image src={jumpData.logo} alt="logo" colors={jumpData.styling.colors} />
   </HeaderWrapper>
 );
 
-const HeaderWrapper = styled.div`
-  display: flex;
-  padding: 16px;
-`;
-const Image = styled.img`
-  max-width: 200px;
-`;
-const TextWrapper = styled.div`
-  flex-grow: 1;
-  text-align: left;
-  padding: 24px;
-`;
-const HeaderPaddable = styled.div`
-  ${({ pad }) => pad && `margin: calc(0.5rem + 1vh) 0;`}
-`;
-const HeaderDiv = ({ text, pad }) => (
-  <HeaderPaddable pad={pad}>
-    <HeaderSm>{text}</HeaderSm>
-  </HeaderPaddable>
+const Extra = ({ jumpData, col }) => (
+  <ExtraWrapper>
+    <Setting setting={jumpData.setting} />
+    <ExtraCol
+      title={jumpData[charKeys.challenge].name}
+      text={jumpData[charKeys.challenge].desc}
+      colors={jumpData.styling.colors}
+    />
+    {jumpData[charKeys.allies].length > 0 && (
+      <TextUnderline>Allies</TextUnderline>
+    )}
+    {jumpData[charKeys.allies].map((ally) => (
+      <ExtraCol
+        title={ally.name}
+        text={ally.desc}
+        colors={col}
+        key={"ally-" + ally.name}
+      />
+    ))}
+    {jumpData[charKeys.abilities].length > 0 && (
+      <TextUnderline>Abilities</TextUnderline>
+    )}
+    {jumpData[charKeys.abilities].map((ability) => (
+      <ExtraCol title={ability.name} text={ability.power} colors={col} />
+    ))}
+    {jumpData[charKeys.advDrawback].length > 0 && (
+      <TextUnderline>{`Advantages & Drawbacks`}</TextUnderline>
+    )}
+    {jumpData[charKeys.advDrawback].map((advDraw) => (
+      <ExtraCol title={advDraw.name} colors={col}>
+        <RightColWrap>
+          <div>+ {advDraw.adv}</div>
+          <div>- {advDraw.drawback}</div>
+        </RightColWrap>
+      </ExtraCol>
+    ))}
+    {jumpData[charKeys.items].length > 0 && (
+      <Inventory itemArr={jumpData[charKeys.items]} />
+    )}
+  </ExtraWrapper>
 );
-const Wrapper = styled.div`
-  width: 100%;
-  padding: calc(1rem + 1.5vw);
-  color: ${({ col }) => col.mainText};
-  ${({ styling, col }) =>
-    `border: ${styling.bordersWidth} ${styling.borderStyle} ${col.mainBorder};`}
-    border-radius:  ${({ styling }) => styling.sectionCornerRadius};
-  background: ${({ col }) => ` linear-gradient(
-    0.15turn,
-    ${col.bgB},
-    ${col.bgA},
-    ${col.bgB}
-  );`}
+const Setting = ({ setting }) => {
+  const [showSetting, setShow] = useState(false);
+  const switchShow = () => {
+    setShow(!showSetting);
+  };
 
-`;
+  return (
+    <>
+      <SettingsTitle>
+        <TextUnderline>Settings</TextUnderline>
+        <FillMiddle>-</FillMiddle>
+        <Btn onClick={switchShow}>{showSetting ? "/\\" : "V"}</Btn>
+      </SettingsTitle>
+      {showSetting && <div>{setting}</div>}
+    </>
+  );
+};
+const ExtraCol = ({ children, title, text, colors }) => (
+  <>
+    <LeftCol colors={colors}>{title}</LeftCol>
+    <RightCol>
+      {text} {children}
+    </RightCol>
+    <br />
+  </>
+);
 
-const FontWrapper = styled.div`
-  font-family: '${({ font }) => font.fontName}';
-  ${TextMdCss}
+const Inventory = ({ itemArr }) => (
+  // TODO add move to warehouse option
+  <>
+    <TextUnderline>Inventory</TextUnderline>
+    <InventoryWrapper>
+      {itemArr.map((item) => (
+        <InventoryItem
+          name={item.name}
+          desc={item.desc}
+          quantity={item.quantity}
+          icon={item.icon}
+        />
+      ))}
+    </InventoryWrapper>
+  </>
+);
+const InventoryItem = ({ name, desc, quantity, icon }) => (
+  <TooltipWrapper>
+    <Tooltip>{desc}</Tooltip>
+    <InventoryItemBox>
+      {icon ? <InvImg src={icon} alt={name} /> : name}
+      {quantity > 1 && "  |  x" + quantity}
+    </InventoryItemBox>
+  </TooltipWrapper>
+);
 
-  @font-face{
-    font-family: '${({ font }) => font.fontName}';
-    ${({ font }) => {
-      return (
-        !font.fontIsLink &&
-        `src: url(data:font/ttf;base64,${font.fontData} ) format('truetype');`
-      );
-    }}
-  }
-
-`;
 export default Jump;

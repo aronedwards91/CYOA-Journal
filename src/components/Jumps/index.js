@@ -6,12 +6,12 @@ import { useGlobalDataStore } from "../state/globals";
 import Jump from "./jump";
 
 const Jumps = observer(() => {
-  const { jumpsArray } = useGlobalDataStore();
+  const { jumpsArray, isShowingCustomFonts } = useGlobalDataStore();
 
   return (
     <Wrapper>
       {jumpsArray.map((element) => (
-        <Jump key={element.name} jumpData={element} />
+        <Jump keyStr={element.name} jumpData={element} showFont={isShowingCustomFonts}/>
       ))}
     </Wrapper>
   );

@@ -30,3 +30,18 @@ export const getStorage = () => {
 export const storeData = (dataObj) => {
   localStorage.setItem(localStorageKey, JSON.stringify(dataObj));
 };
+
+// Character Keys
+
+export const charKeys = {
+  profImg: "char-profimg", // imgfile
+  race: "body-race", // string
+  background: "char-background", // [name]string, [desc]string
+  challenge: "char-challenge", // [name]string, [desc]string
+  allies: "char-allies", // [name]string, [desc]string
+  abilities: "body-ability", // [name]string, [power]string
+  advDrawback: "char-advdrawback", // [name]string, [adv]string, [drawback]string
+  drawback: "char-drawback", // // [name]string, [desc]string
+  items: "inv-items", // must be an array , [icon]img-Base64.jpg
+  points: "cost", // number
+};
