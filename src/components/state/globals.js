@@ -17,7 +17,15 @@ export function createGlobalStore() {
       this.isShowingCustomFonts = false;
       updateLocalStorage(this);
     },
-    showItemname: true,
+    displayItemname: true,
+    showItemname() {
+      this.displayItemname = true;
+      updateLocalStorage(this);
+    },
+    hideItemname() {
+      this.displayItemname = false;
+      updateLocalStorage(this);
+    },
     jumpsArray: init.jumpsArray || [],
     addJump(newJumpObj) {
       if (CheckJumpImport(newJumpObj)) {

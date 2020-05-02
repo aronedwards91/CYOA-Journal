@@ -1,7 +1,10 @@
 import React, { useState } from "react";
+import { Helmet } from "react-helmet";
+import { observer } from "mobx-react-lite";
+import { useGlobalDataStore } from "../state/globals";
+
 import { TooltipWrapper, Tooltip, Btn } from "../StyledItems";
 import { HeaderMd } from "../StyledItems/fontSizing";
-import { Helmet } from "react-helmet";
 import { charKeys } from "../../utils";
 import {
   InventoryWrapper,
@@ -131,27 +134,33 @@ const ExtraCol = ({ children, title, text, colors }) => (
   </>
 );
 
-const Inventory = ({ itemArr }) => (
-  // TODO add move to warehouse option
-  <>
-    <TextUnderline>Inventory</TextUnderline>
-    <InventoryWrapper>
-      {itemArr.map((item) => (
-        <InventoryItem
-          name={item.name}
-          desc={item.desc}
-          quantity={item.quantity}
-          icon={item.icon}
-        />
-      ))}
-    </InventoryWrapper>
-  </>
-);
-const InventoryItem = ({ name, desc, quantity, icon }) => (
+const Inventory = observer(({ itemArr }) => {
+  const { displayItemname } = useGlobalDataStore();
+
+  return (
+    // TODO add move to warehouse option
+    <>
+      <TextUnderline>Inventory</TextUnderline>
+      <InventoryWrapper>
+        {itemArr.map((item) => (
+          <InventoryItem
+            name={item.name}
+            desc={item.desc}
+            quantity={item.quantity}
+            icon={item.icon}
+            forceName={displayItemname}
+          />
+        ))}
+      </InventoryWrapper>
+    </>
+  );
+});
+const InventoryItem = ({ name, desc, quantity, icon, forceName }) => (
   <TooltipWrapper>
     <Tooltip>{desc}</Tooltip>
     <InventoryItemBox>
       {icon ? <InvImg src={icon} alt={name} /> : name}
+      {forceName && icon && name}
       {quantity > 1 && "  |  x" + quantity}
     </InventoryItemBox>
   </TooltipWrapper>

@@ -10,6 +10,7 @@ import Modal from "../modal";
 const Strings = {
   title: "Settings",
   font: "Show Custom Fonts",
+  itemName: "Display Item's Name",
 };
 
 const Settings = observer(() => {
@@ -20,6 +21,9 @@ const Settings = observer(() => {
     isShowingCustomFonts,
     showCustomFonts,
     hideCustomFonts,
+    displayItemname,
+    showItemname,
+    hideItemname,
   } = useGlobalDataStore();
 
   return (
@@ -32,6 +36,12 @@ const Settings = observer(() => {
             label={Strings.font}
             setOn={showCustomFonts}
             setOff={hideCustomFonts}
+          />
+          <Switch
+            watchedVal={displayItemname}
+            label={Strings.itemName}
+            setOn={showItemname}
+            setOff={hideItemname}
           />
         </Modal>
       ) : null}
