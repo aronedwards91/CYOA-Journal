@@ -11,7 +11,7 @@ const Jumps = observer(() => {
   return (
     <Wrapper>
       {jumpsArray.map((element) => (
-        <Jump keyStr={element.name} jumpData={element} showFont={isShowingCustomFonts}/>
+        <Jump key={element.name} jumpData={element} showFont={isShowingCustomFonts}/>
       ))}
     </Wrapper>
   );

@@ -17,7 +17,9 @@ export function createGlobalStore() {
       this.isShowingCustomFonts = false;
       updateLocalStorage(this);
     },
-    displayItemname: true,
+    displayItemname: init.hasOwnProperty("displayItemname")
+      ? init.displayItemname
+      : true,
     showItemname() {
       this.displayItemname = true;
       updateLocalStorage(this);
@@ -46,7 +48,7 @@ export function createGlobalStore() {
       });
       updateLocalStorage(this);
     },
-    warehouse: [
+    warehouse: init.warehouse || [
       {
         name: "40,000sq",
         desc: "A ton of space.",
@@ -67,13 +69,23 @@ export function createGlobalStore() {
         icon: false,
       },
     ],
+    addToWarehouse(item) {
+      this.warehouse.push(item);
+      updateLocalStorage(this);
+    },
+    removeFromWarehouse(arrId) {
+      this.warehouse.splice(arrId, 1);
+      updateLocalStorage(this);
+    },
   };
 }
 
 const updateLocalStorage = (context) => {
   const Obj = {
     isShowingCustomFonts: context.isShowingCustomFonts,
+    displayItemname: context.displayItemname,
     jumpsArray: context.jumpsArray,
+    warehouse: context.warehouse,
   };
   storeData(Obj);
 };

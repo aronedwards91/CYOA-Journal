@@ -2,7 +2,6 @@ import React from "react";
 import styled from "styled-components";
 import media from "styled-media-query";
 
-
 import { TextSmCss, TextMdCss } from "./fontSizing";
 
 export const RedX = () => <span style={{ color: "red" }}>X</span>;
@@ -10,7 +9,7 @@ export const RedX = () => <span style={{ color: "red" }}>X</span>;
 export const Btn = styled.div`
   cursor: pointer;
   background: rgba(54, 54, 52, 0.6);
-  border: 2px solid black;
+  border: 2px solid ${({ colors }) => (colors && colors.mainBorder) || "black"};
   border-radius: 5px;
   padding: calc(4px + 0.5vw);
   ${TextMdCss};
@@ -139,4 +138,77 @@ export const ShowOnDeskSpan = styled.span`
   ${media.greaterThan("medium")`
     display: inline;
   `}
+`;
+
+// Inventory
+
+export const InventoryItem = ({
+  name,
+  desc,
+  quantity,
+  icon,
+  forceName,
+  btnText,
+  btnOnclick,
+  colors,
+}) => (
+  <>
+    <TooltipWrapper>
+      <Tooltip>{desc}</Tooltip>
+      <InventoryItemBox colors={colors}>
+        {icon ? <InvImg src={icon} alt={name} /> : name}
+        {forceName && icon && name}
+        {quantity > 1 && "  |  x" + quantity}
+      </InventoryItemBox>
+    </TooltipWrapper>
+    {btnText && (
+      <InvBtn onClick={btnOnclick} colors={colors}>
+        {btnText}
+      </InvBtn>
+    )}
+  </>
+);
+
+const InventoryItemBox = styled.div`
+  border-left: 1px solid ${({ colors }) => (colors && colors.mainBorder) || "black"};
+  padding: 4px 16px;
+  cursor: help;
+`;
+const InvImg = styled.img`
+  margin-top: -4px;
+  margin-bottom: calc(-4px + -0.5vw);
+  height: calc(24px + 1.5vw);
+  width: calc(24px + 1.5vw);
+`;
+const InvBtn = styled.a`
+  border: 1px solid ${({ colors }) => (colors && colors.mainBorder) || "black"};
+  border-radius: 5px;
+  padding: 4px 8px;
+  margin: 4px 12px 2px 0;
+  cursor: pointer;
+  -webkit-transition-duration: 0.4s;
+  transition-duration: 0.4s;
+  text-decoration: none;
+  overflow: hidden;
+  position: relative;
+
+  &:after {
+    content: "";
+    background: ${({ colors }) => (colors && colors.bgB) || "darkgrey"};
+    display: block;
+    position: absolute;
+    padding-top: 200%;
+    padding-left: 250%;
+    margin-left: -20px!important;
+    margin-top: -150%;
+    opacity: 0;
+    transition: all 0.8s
+  }
+  
+  &:active:after {
+    padding: 0;
+    margin: 0;
+    opacity: 1;
+    transition: 0s
+  }
 `;

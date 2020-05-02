@@ -1,22 +1,13 @@
 import React from "react";
 import styled from "styled-components";
 import { TextMdCss, HeaderSm } from "../StyledItems/fontSizing";
-// Inventory
-export const InventoryWrapper = styled.div`
+
+export const DisplayFlex = styled.div`
   display: flex;
-  flex-wrap: wrap;
-  margin-top: 8px;
 `;
-export const InventoryItemBox = styled.div`
-  border-left: 1px solid black;
-  padding: 4px 16px;
-  cursor: help;
-`;
-export const InvImg = styled.img`
-  margin-top: -4px;
-  margin-bottom: calc(-4px + -0.5vw);
-  height: calc(24px + 1.5vw);
-  width: calc(24px + 1.5vw);
+export const FillMiddle = styled.div`
+  flex-grow: 1;
+  text-align: center;
 `;
 // ExtraData
 export const ExtraWrapper = styled.div`
@@ -62,14 +53,6 @@ export const HeaderDiv = ({ text, pad }) => (
     <HeaderSm>{text}</HeaderSm>
   </HeaderPaddable>
 );
-// Settings
-export const SettingsTitle = styled.div`
-  display: flex;
-`;
-export const FillMiddle = styled.div`
-  flex-grow: 1;
-  text-align: center;
-`;
 // Main
 export const Wrapper = styled.div`
   width: 100%;
@@ -101,4 +84,11 @@ export const FontWrapper = styled.div`
     }}
   }
 
+`;
+
+// Inventory
+export const InventoryWrapper = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 8px;
 `;

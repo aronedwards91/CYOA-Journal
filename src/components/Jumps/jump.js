@@ -3,13 +3,11 @@ import { Helmet } from "react-helmet";
 import { observer } from "mobx-react-lite";
 import { useGlobalDataStore } from "../state/globals";
 
-import { TooltipWrapper, Tooltip, Btn } from "../StyledItems";
+import { Btn, InventoryItem } from "../StyledItems";
 import { HeaderMd } from "../StyledItems/fontSizing";
 import { charKeys } from "../../utils";
 import {
   InventoryWrapper,
-  InventoryItemBox,
-  InvImg,
   ExtraWrapper,
   LeftCol,
   RightCol,
@@ -19,33 +17,29 @@ import {
   Image,
   TextWrapper,
   HeaderDiv,
-  SettingsTitle,
+  DisplayFlex,
   FillMiddle,
   Wrapper,
   FontWrapper,
 } from "./styled";
 
-const Jump = ({ jumpData, keyStr, showFont }) => {
-  console.log("sf-", showFont);
-
-  return (
-    <Wrapper
-      styling={jumpData.styling.themeing}
-      col={jumpData.styling.colors}
-      key={keyStr}
-    >
-      <Helmet>
-        {jumpData.styling.font.fontIsLink && showFont && (
-          <link href={jumpData.styling.font.fontData} rel="stylesheet" />
-        )}
-      </Helmet>
-      <FontWrapper font={jumpData.styling.font} showFont={showFont}>
-        <Header jumpData={jumpData} />
-        <Extra jumpData={jumpData} col={jumpData.styling.colors} />
-      </FontWrapper>
-    </Wrapper>
-  );
-};
+const Jump = ({ jumpData, keyStr, showFont }) => (
+  <Wrapper
+    styling={jumpData.styling.themeing}
+    col={jumpData.styling.colors}
+    key={keyStr}
+  >
+    <Helmet>
+      {jumpData.styling.font.fontIsLink && showFont && (
+        <link href={jumpData.styling.font.fontData} rel="stylesheet" />
+      )}
+    </Helmet>
+    <FontWrapper font={jumpData.styling.font} showFont={showFont}>
+      <Header jumpData={jumpData} />
+      <Extra jumpData={jumpData} col={jumpData.styling.colors} />
+    </FontWrapper>
+  </Wrapper>
+);
 
 const Header = ({ jumpData }) => (
   <HeaderWrapper>
@@ -89,13 +83,22 @@ const Extra = ({ jumpData, col }) => (
       <TextUnderline>Abilities</TextUnderline>
     )}
     {jumpData[charKeys.abilities].map((ability) => (
-      <ExtraCol title={ability.name} text={ability.power} colors={col} />
+      <ExtraCol
+        title={ability.name}
+        text={ability.power}
+        colors={col}
+        key={"ability-" + ability.name}
+      />
     ))}
     {jumpData[charKeys.advDrawback].length > 0 && (
       <TextUnderline>{`Advantages & Drawbacks`}</TextUnderline>
     )}
     {jumpData[charKeys.advDrawback].map((advDraw) => (
-      <ExtraCol title={advDraw.name} colors={col}>
+      <ExtraCol
+        title={advDraw.name}
+        colors={col}
+        key={"advDraw-" + advDraw.name}
+      >
         <RightColWrap>
           <div>+ {advDraw.adv}</div>
           <div>- {advDraw.drawback}</div>
@@ -103,7 +106,7 @@ const Extra = ({ jumpData, col }) => (
       </ExtraCol>
     ))}
     {jumpData[charKeys.items].length > 0 && (
-      <Inventory itemArr={jumpData[charKeys.items]} />
+      <Inventory itemArr={jumpData[charKeys.items]} colors={col} />
     )}
   </ExtraWrapper>
 );
@@ -115,11 +118,11 @@ const Setting = ({ setting }) => {
 
   return (
     <>
-      <SettingsTitle>
-        <TextUnderline>Settings</TextUnderline>
+      <DisplayFlex>
+        <TextUnderline>CYOA Setting</TextUnderline>
         <FillMiddle>-</FillMiddle>
         <Btn onClick={switchShow}>{showSetting ? "/\\" : "V"}</Btn>
-      </SettingsTitle>
+      </DisplayFlex>
       {showSetting && <div>{setting}</div>}
     </>
   );
@@ -134,36 +137,42 @@ const ExtraCol = ({ children, title, text, colors }) => (
   </>
 );
 
-const Inventory = observer(({ itemArr }) => {
-  const { displayItemname } = useGlobalDataStore();
+const Inventory = observer(({ itemArr, colors }) => {
+  const { displayItemname, addToWarehouse } = useGlobalDataStore();
+  const [showAdd, setShowAdd] = useState(false);
+  const switchShowAdd = () => setShowAdd(!showAdd);
 
   return (
-    // TODO add move to warehouse option
     <>
-      <TextUnderline>Inventory</TextUnderline>
+      <DisplayFlex>
+        <TextUnderline>Inventory</TextUnderline>
+        <FillMiddle>-</FillMiddle>
+        <Btn onClick={switchShowAdd} colors={colors}>
+          {showAdd ? "hide Add" : "Add to Warehouse"}
+        </Btn>
+      </DisplayFlex>
+
       <InventoryWrapper>
-        {itemArr.map((item) => (
-          <InventoryItem
-            name={item.name}
-            desc={item.desc}
-            quantity={item.quantity}
-            icon={item.icon}
-            forceName={displayItemname}
-          />
-        ))}
+        {itemArr.map((item) => {
+          const addClick = () => addToWarehouse(item);
+
+          return (
+            <InventoryItem
+              key={"item" + item.name}
+              name={item.name}
+              desc={item.desc}
+              quantity={item.quantity}
+              icon={item.icon}
+              forceName={displayItemname}
+              btnText={showAdd ? "+" : false}
+              btnOnclick={addClick}
+              colors={colors}
+            />
+          );
+        })}
       </InventoryWrapper>
     </>
   );
 });
-const InventoryItem = ({ name, desc, quantity, icon, forceName }) => (
-  <TooltipWrapper>
-    <Tooltip>{desc}</Tooltip>
-    <InventoryItemBox>
-      {icon ? <InvImg src={icon} alt={name} /> : name}
-      {forceName && icon && name}
-      {quantity > 1 && "  |  x" + quantity}
-    </InventoryItemBox>
-  </TooltipWrapper>
-);
 
 export default Jump;

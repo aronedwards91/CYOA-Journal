@@ -30,6 +30,7 @@ const BgWrapper = styled.div`
   padding: calc(0.5rem + 1.5vw);
   background: rgba(180, 180, 180, 0.3);
   text-align: centre;
+  z-index: 100;
 `;
 const ModalBox = styled.div`
   border: 2px solid grey;
