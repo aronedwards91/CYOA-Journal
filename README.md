@@ -13,7 +13,7 @@ Journalpage for storing adventures
 #### TODO
 - journalling
 - backup / restore character
-- collapsable jump
+- collapsable jumpRemoveWrapper
 - mobile styling
 
 ## Setup & other stuff

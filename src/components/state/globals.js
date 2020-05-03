@@ -17,6 +17,7 @@ export function createGlobalStore() {
       this.isShowingCustomFonts = false;
       updateLocalStorage(this);
     },
+
     displayItemname: init.hasOwnProperty("displayItemname")
       ? init.displayItemname
       : true,
@@ -28,6 +29,7 @@ export function createGlobalStore() {
       this.displayItemname = false;
       updateLocalStorage(this);
     },
+
     jumpsArray: init.jumpsArray || [],
     addJump(newJumpObj) {
       if (CheckJumpImport(newJumpObj, this.jumpsArray)) {
@@ -37,17 +39,43 @@ export function createGlobalStore() {
       updateLocalStorage(this);
     },
     removeJump(jumpArrId) {
+      const ujid = this.jumpsArray[jumpArrId].ujid;
       this.jumpsArray.splice(jumpArrId, 1);
+      delete this.jumpsJournal[ujid];
       updateLocalStorage(this);
     },
-    jumpsJournal: [],
-    addJumpJournal(jumpId) {
-      this.jumpsJournal.push({
-        jumpId,
-        entries: [],
-      });
+
+    jumpsJournal: init.jumpsJournal || {},
+    addJournal(jumpId) {
+      this.jumpsJournal[jumpId] = [];
+    },
+    addJournalEntry(jumpId, entryObj) {
+      if (!entryObj) {
+        this.jumpsJournal[jumpId].push({
+          title: "New",
+          text: "Journal Entry",
+        });
+        updateLocalStorage(this);
+      } else if (entryObj.title && entryObj.text) {
+        this.jumpsJournal[jumpId].push(entryObj);
+        updateLocalStorage(this);
+      } else {
+        console.error("Journal entry format error");
+      }
+    },
+    updateJournalEntry(jumpId, entryArrIndx, newEntryObj) {
+      if (newEntryObj.title && newEntryObj.text) {
+        this.jumpsJournal[jumpId][entryArrIndx] = newEntryObj;
+        updateLocalStorage(this);
+      } else {
+        console.error("Journal entry format error");
+      }
+    },
+    removeJournalEntry(jumpId, entryArrIndx) {
+      this.jumpsJournal[jumpId].splice(entryArrIndx, 1);
       updateLocalStorage(this);
     },
+
     warehouse: init.warehouse || [
       {
         name: "40,000sq",
@@ -86,15 +114,19 @@ const updateLocalStorage = (context) => {
     displayItemname: context.displayItemname,
     jumpsArray: context.jumpsArray,
     warehouse: context.warehouse,
+    jumpsJournal: context.jumpsJournal,
   };
   storeData(Obj);
 };
 
 const CheckJumpImport = (file, jumpsArray) => {
+  // ujid is Unique Jump Id, links jump to journals object
   if (file.name && file["body-race"]) {
-    file.ujid = file.name + '--' + file.cyoa;
+    const ujid = file.name + "--" + file.cyoa;
+    file.ujid = ujid.replace(/[^0-9a-zA-Z_']/g, "");
+
     const existsCheck = jumpsArray.findIndex((i) => i.ujid === file.ujid);
-    console.log('exc', existsCheck);
+    console.log("exc", existsCheck);
     if (existsCheck === -1) {
       return true;
     } else {

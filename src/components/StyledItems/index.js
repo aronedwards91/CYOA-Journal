@@ -23,8 +23,7 @@ export const Btn = styled.div`
 `;
 export const SmBtn = styled.div`
   cursor: pointer;
-  border: 1px solid
-    ${({ colors }) => (colors && colors.mainBorder) || "black"};
+  border: 1px solid ${({ colors }) => (colors && colors.mainBorder) || "black"};
   border-radius: 5px;
   padding: calc(2px + 0.3vw) calc(8px + 1vw);
   ${TextSmCss};
@@ -164,7 +163,10 @@ export const InventoryItem = ({
 }) => (
   <>
     <TooltipWrapper>
-      <Tooltip>{desc}</Tooltip>
+      <Tooltip>
+        {icon ? name + "; " : null}
+        {desc}
+      </Tooltip>
       <InventoryItemBox colors={colors}>
         {icon ? <InvImg src={icon} alt={name} /> : name}
         {forceName && icon && name}

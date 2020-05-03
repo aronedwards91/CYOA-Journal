@@ -18,13 +18,17 @@ const ImportJump = observer(() => {
   const openModal = () => setShowModal(true);
   const hideModal = () => setShowModal(false);
   const { addJump } = useGlobalDataStore();
+  const AddJump = (jump) => {
+    addJump(jump);
+    hideModal();
+  };
 
   return (
     <>
       <Btn onClick={openModal}>{Strings.title}</Btn>
       {showModal ? (
         <Modal title={Strings.title} onHide={hideModal}>
-          <ImportModal onImport={addJump} />
+          <ImportModal onImport={AddJump} />
         </Modal>
       ) : null}
     </>
