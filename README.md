@@ -1,17 +1,17 @@
 # CYOA Jumpchain Journal
 
-Journalpage for storing adventures
+Journal page for storing jumps made with CYOA Viewer 
 
 ### Notes
 
-- Data is imported from CYOA's built with [CYOA Viewer](https://github.com/aronedwards91/CYOA-Viewer)
+- Jumps are imported from CYOA's built with [CYOA Viewer](https://github.com/aronedwards91/CYOA-Viewer)
 
-- Signle Embedded HTML file, so can be sued as app (not optimised for web hosting)
+- Single Embedded HTML file, so can be used as app (not optimised for web hosting)
 
 - Image linked will auto embed up to 6MB (over 6 is left out just as a warning as this creates very slow & large html files, most images are small and only require around 300x400 for big screens.)
 
 #### TODO
-- mobile styling
+- External testing
 
 ## Setup & other stuff
 
