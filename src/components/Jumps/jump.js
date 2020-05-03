@@ -3,7 +3,12 @@ import { Helmet } from "react-helmet";
 import { observer } from "mobx-react-lite";
 import { useGlobalDataStore } from "../state/globals";
 
-import { Btn, InventoryItem } from "../StyledItems";
+import {
+  Btn,
+  InventoryItem,
+  ShowOnDeskSpan,
+  ShowOnMobSpan,
+} from "../StyledItems";
 import { HeaderMd } from "../StyledItems/fontSizing";
 import { charKeys } from "../../utils";
 import {
@@ -15,15 +20,22 @@ import {
   RightColWrap,
   HeaderWrapper,
   Image,
+  HideImage,
   TextWrapper,
   HeaderDiv,
   DisplayFlex,
   FillMiddle,
   Wrapper,
   FontWrapper,
+  SettingWrapper,
 } from "./styled";
 import RemoveJump from "./removeJump";
 import Journal from "../Journal";
+
+const Strings = {
+  addWarehouse: "",
+  mobAddWarehouse: "+ Warehouse",
+};
 
 const Jump = ({ jumpData, keyStr, showFont, index }) => (
   <Wrapper
@@ -39,8 +51,8 @@ const Jump = ({ jumpData, keyStr, showFont, index }) => (
     <FontWrapper font={jumpData.styling.font} showFont={showFont}>
       <Header jumpData={jumpData} />
       <Extra jumpData={jumpData} col={jumpData.styling.colors} />
-      <Journal ujid={jumpData.ujid} colors={jumpData.styling.colors}/>
-      <RemoveJump jumpIndex={index} colors={jumpData.styling.colors}/>
+      <Journal ujid={jumpData.ujid} colors={jumpData.styling.colors} />
+      <RemoveJump jumpIndex={index} colors={jumpData.styling.colors} />
     </FontWrapper>
   </Wrapper>
 );
@@ -60,7 +72,9 @@ const Header = ({ jumpData }) => (
         text={`${jumpData.name} - Age: ${jumpData.age} - ${jumpData["body-race"]} - Origin: ${jumpData["char-background"]}`}
       />
     </TextWrapper>
-    <Image src={jumpData.logo} alt="logo" colors={jumpData.styling.colors} />
+    <HideImage>
+      <Image src={jumpData.logo} alt="logo" colors={jumpData.styling.colors} />
+    </HideImage>
   </HeaderWrapper>
 );
 
@@ -114,6 +128,7 @@ const Extra = ({ jumpData, col }) => (
     )}
   </ExtraWrapper>
 );
+
 const Setting = ({ setting }) => {
   const [showSetting, setShow] = useState(false);
   const switchShow = () => {
@@ -121,16 +136,17 @@ const Setting = ({ setting }) => {
   };
 
   return (
-    <>
+    <SettingWrapper>
       <DisplayFlex>
         <TextUnderline>CYOA Setting</TextUnderline>
         <FillMiddle>-</FillMiddle>
         <Btn onClick={switchShow}>{showSetting ? "/\\" : "V"}</Btn>
       </DisplayFlex>
       {showSetting && <div>{setting}</div>}
-    </>
+    </SettingWrapper>
   );
 };
+
 const ExtraCol = ({ children, title, text, colors }) => (
   <>
     <LeftCol colors={colors}>{title}</LeftCol>
@@ -152,7 +168,14 @@ const Inventory = observer(({ itemArr, colors }) => {
         <TextUnderline>Inventory</TextUnderline>
         <FillMiddle>-</FillMiddle>
         <Btn onClick={switchShowAdd} colors={colors}>
-          {showAdd ? "hide Add" : "Add to Warehouse"}
+          {showAdd ? (
+            "hide Add"
+          ) : (
+            <>
+              <ShowOnDeskSpan>{Strings.addWarehouse}</ShowOnDeskSpan>
+              <ShowOnMobSpan>{Strings.mobAddWarehouse}</ShowOnMobSpan>
+            </>
+          )}
         </Btn>
       </DisplayFlex>
 

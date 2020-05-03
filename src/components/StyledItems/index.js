@@ -14,11 +14,10 @@ export const Btn = styled.div`
   padding: calc(4px + 0.5vw);
   ${TextMdCss};
   margin-bottom: 8px;
-  width: 60%;
+  width: fit-content;
 
   ${media.greaterThan("medium")`
     margin-bottom: 16px;
-    width: fit-content;
   `}
 `;
 export const SmBtn = styled.div`

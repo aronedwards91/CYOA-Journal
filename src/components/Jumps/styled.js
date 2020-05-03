@@ -1,6 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import { TextMdCss, HeaderSm } from "../StyledItems/fontSizing";
+import media from "styled-media-query";
+import { ShowOnlyDesktop } from "../StyledItems";
+import { TextMdCss, HeaderSm, TextSmCss } from "../StyledItems/fontSizing";
 
 export const DisplayFlex = styled.div`
   display: flex;
@@ -11,16 +13,38 @@ export const FillMiddle = styled.div`
 `;
 // ExtraData
 export const ExtraWrapper = styled.div`
-  padding: 8px calc(1rem + 1.5vw);
+  padding: 8px 0;
+  ${TextSmCss}
+
+  ${media.greaterThan("medium")`
+    padding: 8px calc(1rem + 1.5vw);
+  `}
+`;
+export const ColWrap = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  ${media.greaterThan("medium")`
+    flex-direction: row;
+  `}
 `;
 export const LeftCol = styled.div`
-  width: 26%;
+  width: 100%;
+  border-bottom: 1px solid ${({ colors }) => colors.mainBorder};
+
+  ${media.greaterThan("medium")`
+  border: none;
   border-right: 1px solid ${({ colors }) => colors.mainBorder};
-  display: inline-block;
+  flex-basis: 26%;
+  `}
 `;
-export const RightCol = styled.span`
-  padding-left: calc(1rem + 1vw);
-  vertical-align: top;
+export const RightCol = styled.div`
+  padding-left: 0;
+  flex-grow: 1;
+
+  ${media.greaterThan("medium")`
+   padding-left: calc(1rem + 1vw);
+  `}
 `;
 export const TextUnderline = styled.div`
   ${TextMdCss}
@@ -28,22 +52,44 @@ export const TextUnderline = styled.div`
   margin-top: 8px;
 `;
 export const RightColWrap = styled.div`
-  width: 65%;
+  width: 100%;
   display: inline-block;
+
+  ${media.greaterThan("medium")`
+     width: 65%;
+  `}
 `;
 // Header
 export const HeaderWrapper = styled.div`
   display: flex;
-  padding: 16px;
+  padding: 0;
+
+  ${media.greaterThan("medium")`
+    padding: 16px;
+  `}
 `;
 export const Image = styled.img`
-  max-width: 200px;
+  object-fit: cover;
+  max-width: 45%;
+  max-height: 200px;
   border: 2px solid ${({ colors }) => colors.mainBorder};
+
+  ${media.greaterThan("medium")`  
+    max-width: 200px;
+    max-height: none;
+  `}
+`;
+export const HideImage = styled(ShowOnlyDesktop)`
+  width: fit-content;
 `;
 export const TextWrapper = styled.div`
   flex-grow: 1;
   text-align: left;
-  padding: 24px;
+  padding: 8px;
+
+  ${media.greaterThan("medium")`  
+    padding: 24px;
+  `}
 `;
 export const HeaderPaddable = styled.div`
   ${({ pad }) => pad && `margin: calc(0.5rem + 1vh) 0;`}
@@ -86,6 +132,10 @@ export const FontWrapper = styled.div`
 
 `;
 
+// Settings
+export const SettingWrapper = styled.div`
+  margin-bottom: 16px;
+`;
 // Inventory
 export const InventoryWrapper = styled.div`
   display: flex;

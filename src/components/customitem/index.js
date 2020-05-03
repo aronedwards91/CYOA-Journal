@@ -61,7 +61,12 @@ const CustomItemModal = ({ onAdd, hideModal }) => {
       <InputStyled type="text" id={customDescriptionId} />
       <br />
       <StyledLabel htmlFor={customQuantityId}>Quantity: </StyledLabel>
-      <InputStyled type="number" id={customQuantityId} min={0} placeholder={0} />
+      <InputStyled
+        type="number"
+        id={customQuantityId}
+        min={0}
+        placeholder={0}
+      />
       <br />
       <AddBtn onClick={getImportedJump}>{Strings.trigger}</AddBtn>
     </Wrapper>
@@ -94,7 +99,11 @@ const InputStyled = styled.input`
 const StyledLabel = styled.label`
   display: inline-block;
   width: 35%;
-  ${TextMdCss}
+  ${TextSmCss}
+
+  ${media.greaterThan("medium")`
+   ${TextMdCss}
+  `}
 `;
 const AddBtn = styled(Btn)`
   text-align: center;
