@@ -3,20 +3,30 @@ import styled from "styled-components";
 import { observer } from "mobx-react-lite";
 
 import { useGlobalDataStore } from "../state/globals";
-import { Btn } from "../StyledItems";
-import { TextMd } from "../StyledItems/fontSizing";
+import { Btn, SmBtn } from "../StyledItems";
+import { TextMd, TextSmCss } from "../StyledItems/fontSizing";
 import Modal from "../modal";
 
 const Strings = {
   title: "Settings",
   font: "Show Custom Fonts",
   itemName: "Display Item's Name",
+  backup: "backup data",
+  import: "Import Backup",
+  hideImport: "Hide Import",
+  runImport: "Import",
+  pageRefresh: "Please wait, data reseting, page will reload.",
 };
+const importBackupID = "importBackupID";
 
 const Settings = observer(() => {
   const [showModal, setShowModal] = useState(false);
   const openModal = () => setShowModal(true);
   const hideModal = () => setShowModal(false);
+  const [showImport, setShowImport] = useState(false);
+  const switchImportShow = () => setShowImport(!showImport);
+  const [showReloadModal, setReloadModal] = useState(false);
+
   const {
     isShowingCustomFonts,
     showCustomFonts,
@@ -24,7 +34,18 @@ const Settings = observer(() => {
     displayItemname,
     showItemname,
     hideItemname,
+    backupFile,
+    importBackup,
   } = useGlobalDataStore();
+  const runBkup = () => {
+    hideModal();
+    backupFile();
+  };
+  const importBkup = () => {
+    hideModal();
+    setReloadModal(true);
+    importBackup(importBackupID);
+  };
 
   return (
     <>
@@ -43,8 +64,19 @@ const Settings = observer(() => {
             setOn={showItemname}
             setOff={hideItemname}
           />
+          <StyledBtn onClick={runBkup}>{Strings.backup}</StyledBtn>
+          <StyledBtn onClick={switchImportShow}>
+            {showImport ? Strings.hideImport : Strings.import}
+          </StyledBtn>
+          {showImport && (
+            <>
+              <InputStyled type="file" id={importBackupID} />
+              <SmBtn onClick={importBkup}>{Strings.runImport}</SmBtn>
+            </>
+          )}
         </Modal>
       ) : null}
+      {showReloadModal && <Modal title={Strings.pageRefresh} />}
     </>
   );
 });
@@ -110,6 +142,13 @@ const Switchlabel = styled(TextMd)`
 `;
 const LineBox = styled.div`
   margin-top: -14%;
+`;
+const StyledBtn = styled(Btn)`
+  width: fit-content;
+`;
+const InputStyled = styled.input`
+  ${TextSmCss};
+  margin-bottom: calc(1rem + 1vw);
 `;
 
 export default Settings;

@@ -69,6 +69,7 @@ const Journal = observer(({ ujid, colors }) => {
         !collapseJournal &&
         JumpJournal.map((entries, entryIndx) => (
           <JournalEntry
+            key={"je-" + entryIndx}
             entry={entries}
             jumpId={ujid}
             entryIndx={entryIndx}

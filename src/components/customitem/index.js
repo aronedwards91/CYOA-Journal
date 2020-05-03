@@ -54,13 +54,13 @@ const CustomItemModal = ({ onAdd, hideModal }) => {
 
   return (
     <Wrapper>
-      <StyledLabel for={customNameId}>Name: </StyledLabel>
+      <StyledLabel htmlFor={customNameId}>Name: </StyledLabel>
       <InputStyled type="text" id={customNameId} />
       <br />
-      <StyledLabel for={customDescriptionId}>Description: </StyledLabel>
+      <StyledLabel htmlFor={customDescriptionId}>Description: </StyledLabel>
       <InputStyled type="text" id={customDescriptionId} />
       <br />
-      <StyledLabel for={customQuantityId}>Quantity: </StyledLabel>
+      <StyledLabel htmlFor={customQuantityId}>Quantity: </StyledLabel>
       <InputStyled type="number" id={customQuantityId} min={0} placeholder={0} />
       <br />
       <AddBtn onClick={getImportedJump}>{Strings.trigger}</AddBtn>

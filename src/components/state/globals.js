@@ -1,6 +1,8 @@
 import React from "react";
 import { useLocalStore } from "mobx-react-lite";
 import { storeData, getStorage } from "../../utils";
+import { createFileFromObj } from "./exportTools";
+import { runJSONFromUpload } from "../../utils";
 
 const init = getStorage() || {};
 
@@ -105,17 +107,31 @@ export function createGlobalStore() {
       this.warehouse.splice(arrId, 1);
       updateLocalStorage(this);
     },
+
+    backupFile() {
+      const Obj = CreateObj(this);
+      createFileFromObj(Obj);
+    },
+    importBackup(elementId) {
+      const FinishTrigger = (context) => {
+        updateLocalStorage(context);
+        window.location.reload();
+      };
+      runJSONFromUpload(elementId, FinishTrigger);
+    },
   };
 }
-
-const updateLocalStorage = (context) => {
-  const Obj = {
+const CreateObj = (context) => {
+  return {
     isShowingCustomFonts: context.isShowingCustomFonts,
     displayItemname: context.displayItemname,
     jumpsArray: context.jumpsArray,
     warehouse: context.warehouse,
     jumpsJournal: context.jumpsJournal,
   };
+};
+const updateLocalStorage = (context) => {
+  const Obj = CreateObj(context);
   storeData(Obj);
 };
 

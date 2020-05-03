@@ -45,7 +45,7 @@ const Warehouse = observer(() => {
               const remove = () => removeFromWarehouse(index);
               return (
                 <InventoryItem
-                  key={item.name}
+                  key={item.name + index}
                   name={item.name}
                   desc={item.desc}
                   quantity={item.quantity}

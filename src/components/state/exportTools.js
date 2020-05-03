@@ -18,6 +18,16 @@ export function createFile(data, filename, type) {
   }
 }
 
-export const createFileFromObj = (dataObj, filename) => {
-  createFile(JSON.stringify(dataObj), `${filename}.cyoa.json`, "application/json");
+export const createFileFromObj = (dataObj) => {
+  createFile(
+    JSON.stringify(dataObj),
+    `cyoa-journal-bkup-${getDateString()}.json`,
+    "application/json"
+  );
+};
+
+const getDateString = () => {
+  const today = new Date();
+  const locale = today.toLocaleDateString("en-UK");
+  return locale.replace(/\//g, "-");
 };

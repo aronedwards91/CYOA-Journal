@@ -18,7 +18,7 @@ export const Btn = styled.div`
 
   ${media.greaterThan("medium")`
     margin-bottom: 16px;
-    width: auto;
+    width: fit-content;
   `}
 `;
 export const SmBtn = styled.div`
